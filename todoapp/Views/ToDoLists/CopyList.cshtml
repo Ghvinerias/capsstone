@@ -1,0 +1,103 @@
+﻿@model IEnumerable<ToDoListWithCount>
+
+
+
+@using todoapp.Views.ViewModels
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Create New List</h1>
+<h5></h5>
+
+
+<table class="table">
+    <thead>
+
+        <tr>
+
+            <th>
+                @Html.DisplayNameFor(model => model.tl.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.tl.createdate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.NotStarted)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.InProgress)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Completed)
+            </th>
+            <th>
+                <p>
+                    <a asp-action="Create" class="btn btn-success"><i class="far fa-plus-square"></i>New List</a>
+
+                </p>
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+
+
+            <tr>
+                <td>
+                    <script>
+                    $(Document).ready((function () {
+                        var url = "/Todolists/GetCountByStatus";
+                        var ListIds = item.id;
+                        var StatusId = 1;
+                        $.get(url, { ListIds: ListIds, StatusId: StatusId }, function (data) {
+                            $("#sss").html("ssssssssssss");
+                        })
+
+                    }))
+                    </script>
+
+
+
+
+                    @Html.DisplayFor(modelItem => item.tl.Name)
+
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.tl.createdate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.NotStarted)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.InProgress)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Completed)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.tl.id"><i class="far fa-marker fa-lg"></i>Edit</a>
+                    @*<a asp-action="Details" asp-route-id="@item.tl.id"><i class='far fa-building'></i>Details</a>*@
+                    <a asp-action="Delete" asp-route-id="@item.tl.id" class="text-danger ml-1" onclick="return confirm('are you sure to delete this record?')"><i class="far fa-trash-alt fa-lg"></i>Delete</a>
+                    <a asp-action="Details" asp-route-id="@item.tl.id"><i class='far fa-building'></i></a>@Html.ActionLink("Details", "GetTodoByLIstId", "ToDoes", new { id = item.tl.id })
+                    <a asp-action="CopyList" asp-route-id="@item.tl.id"><i class='far fa-building'></i></a>@Html.ActionLink("CopyList", "CopyList", "todolists", new { id = item.tl.id })
+
+                </td>
+
+            </tr>
+
+        }
+    </tbody>
+</table>
+
+
+
+
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/lib/jquery/dist/jquery.js"></script>
+<script src="~/lib/bootstrap/dist/js/bootstrap.min.js"></script>
+
+
+

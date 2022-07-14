@@ -1,0 +1,21 @@
+﻿@using todoapp.Views.ViewModels
+@model IndexVM
+
+@{
+    ViewData["Title"] = "Index";
+}
+<p>@(ViewBag.Percent)%</p>
+@foreach (var mod in Model.todoeslist)
+{
+    <h6>listid=-@ViewData["ti"]</h6>
+    <h1>@mod.Name</h1>
+}
+
+<hr />
+
+@foreach (var mod in Model.lists)
+{
+    <h1>@mod.description</h1>
+    <h1>@mod.title</h1>
+
+}

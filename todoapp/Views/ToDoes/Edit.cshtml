@@ -1,0 +1,55 @@
+﻿@model ToDoList.DataModel.ToDo
+
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+
+<h4>ToDoes</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+            <div class="form-group">
+                <label asp-for="title" class="control-label"></label>
+                <input asp-for="title" class="form-control" />
+                <span asp-validation-for="title" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="description" class="control-label"></label>
+                <input asp-for="description" class="form-control" />
+                <span asp-validation-for="description" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="duedate" class="control-label"></label>
+                <input asp-for="duedate" class="form-control" />
+                <span asp-validation-for="duedate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <td>@Html.DisplayNameFor(model => model.todostatusid)</td>
+                <td>@Html.DropDownListFor(model => model.todostatusid, new SelectList(Model.ToDoStatusCollection, "Id", "statusname"), "select")</td>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <input type="submit" value="Save" class="btn btn-primary" />
+                </div>
+                <div class="form-group  col-md-6">
+                    <div class="btn btn-dark btn-block ">@Html.ActionLink("Back", "GetTodoByLIstId", "ToDoes", new { id = Model.todolistid })</div>
+                </div>
+            </div>
+
+        </form>
+    </div>
+</div>
+
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

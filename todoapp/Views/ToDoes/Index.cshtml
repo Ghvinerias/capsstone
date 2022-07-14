@@ -1,0 +1,21 @@
+﻿@model IEnumerable<ToDoList.DataModel.ToDo>
+
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h4>Create ToDo</h4>
+<h5>@TempData["ListID"]</h5>
+
+
+
+<div id="tableDiv"</div>
+
+
+
+@section Scripts{
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+    <script src="~/CustomScripts/BuilDToDoTable.js"></script>
+
+}

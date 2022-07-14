@@ -1,0 +1,50 @@
+﻿@model IEnumerable<ToDoList.DataModel.ToDo>
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.title)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.description)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.duedate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.createdate)
+            </th>
+
+            <th>
+                <p>
+                    <a asp-action="Create" class="btn btn-success"><i class="far fa-plus-square"></i>New ToDo</a>
+                </p>
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.title)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.description)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.duedate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.createdate)
+                </td>
+
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id"><i class="far fa-marker fa-lg"></i>Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.Id"><i class='far fa-building'></i>Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.Id" class="text-danger ml-1" onclick="return confirm('are you sure to delete this record?')"><i class="far fa-trash-alt fa-lg"></i>Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

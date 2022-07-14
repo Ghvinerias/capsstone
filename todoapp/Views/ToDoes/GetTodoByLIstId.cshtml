@@ -1,0 +1,125 @@
+﻿@model IEnumerable<ToDoList.DataModel.ToDo>
+
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<div id="tableDiv2"></div>
+
+<div id="ProgressBarToDo">
+
+    <div class="progress">
+        <div class="progress-bar" role="progressbar" style="width:@(Html.Encode( ViewBag.Percent))%"></div>
+    </div>
+    <p>@(ViewBag.Percent)%</p>
+</div>
+
+
+<h4>Create ToDo For List @TempData["LISTNAME"]</h4>
+
+
+<script src="~/lib/jquery/dist/jquery.js"></script>
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+
+<script type="text/javascript">
+    function submitform() {
+        $('form').submit();
+    }
+
+</script>
+
+
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.title)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.description)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.duedate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.createdate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.todostatus)
+            </th>
+
+            <th>
+                <p>
+                    <a asp-action="Create" class="btn btn-success"><i class="far fa-plus-square"></i>New ToDo</a>
+                </p>
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+
+
+        @foreach (var item in Model)
+        {
+
+            <tr>
+                <td>
+                    @if (item.todostatusid != 3)
+                    {
+                        @Html.DisplayFor(modelItem => item.title)
+                    }
+                    else
+                    {
+                        <div class="CompletedToDo">  @Html.DisplayFor(modelItem => item.title)</div>
+                    }
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.description)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.duedate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.createdate)
+                </td>
+                <td>
+
+                <td id="dropdrop" onchange=submitform()>
+                    @Html.DropDownListFor(modelItem => item.todostatusid, new SelectList(item.ToDoStatusCollection, "Id", "statusname"), "--select--", new
+               {
+
+                        id = item.Id,
+                        todostatusid = item.todostatusid,
+                   @class = "ActiveCheck"
+               })
+                    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+                    <script type="text/javascript">
+                        $("body").on("change", "#ddlFruits", function () {
+                            $("#hfFruitName").val($(this).find("option:selected").text());
+                            document.forms["Form1"].submit();
+                        });
+                    </script>
+                </td>
+
+
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.todostatusid)
+                </td>
+                <td>
+                    <a asp-action="AddEdit" asp-route-id="@item.Id"><i class="far fa-marker fa-lg"></i>Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.Id"><i class='far fa-building'></i>Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.Id" class="text-danger ml-1" onclick="return confirm('are you sure to delete this record?')"><i class="far fa-trash-alt fa-lg"></i>Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+@section Scripts{
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+    <script src="~/CustomScripts/BuilDToDoTable.js"></script>
+    <script src="~/CustomScripts/DropBoxListener.js"></script>
+
+}
