@@ -6,9 +6,7 @@ COPY *.sln .
 COPY ToDoList/*.csproj ./ToDoList/
 COPY ToDoAppTest/*.csproj ./ToDoAppTest/
 COPY todoapp/*.csproj ./todoapp/
-EXPOSE 5000
-EXPOSE 45665
-#
+
 RUN dotnet restore 
 #
 # copy everything else and build app
