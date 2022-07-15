@@ -1,0 +1,45 @@
+version: '3'
+
+volumes:
+  sql-data:
+    driver: local
+  sql-log:
+    driver: local
+  sql-sec:
+    driver: local
+networks:
+  todo-net:
+    driver: bridge
+    
+
+services:
+  todo-sql:
+    image: mcr.microsoft.com/mssql/server:2019-latest
+    container_name: todo-sql
+    ports:
+      - "1433:1433"
+    environment:
+      - MSSQL_SA_PASSWORD=Aa12345@
+      - ACCEPT_EULA=y
+    volumes:
+      - sql-data:/var/opt/mssql/data
+      - sql-log:/var/opt/mssql/log
+      - sql-sec:/var/opt/mssql/secrets
+    restart: unless-stopped
+    command:
+      - "--config.file=/etc/prometheus/prometheus.yml"
+    networks:
+      - todo-net
+      
+  todo-app:
+    image: ghvinerias/todolist:latest
+    container_name: todo-app
+    ports:
+      - "5000:5000"
+    environment:
+      - PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+      - ASPNETCORE_URLS=http://*:5000
+      - DOTNET_RUNNING_IN_CONTAINER=true
+    restart: unless-stopped
+    networks:
+      - monitoring_default
